@@ -10,9 +10,9 @@ namespace _8PuzzleSolution
     {
         public List<Node> Children = new List<Node>();
         public Node parent;
-        public int[,] Puzzle = new int[3, 3];
-        public int[,] CopiedArray = new int[3, 3];
-        public int[,] CurrentState = new int[3, 3];
+        public int[,] Puzzle = new int[3, 3]; // her üretilen child matrisi / Node için kullanılan değişken matris
+        public int[,] CopiedArray = new int[3, 3]; // İşlem yapılan düğümün matrisinin değişmemesi için kullanılan geçici matris
+        public int[,] CurrentState = new int[3, 3]; // Üzerinde işlem yapılacak düğümün matrisi
         public int[,] FinalState = new int[3, 3] {  {1, 2, 3},
                                                     {4, 5, 6},
                                                     {7, 8, 0}};
@@ -162,7 +162,7 @@ namespace _8PuzzleSolution
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    Console.Write(node.Puzzle[i, j] + "  ");
+                    Console.Write("  "+node.Puzzle[i, j]);
                 }
                 Console.WriteLine();
             }

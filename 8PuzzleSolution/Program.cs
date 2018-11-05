@@ -19,7 +19,7 @@ namespace _8PuzzleSolution
             List<int> usedNumbers = new List<int>();
             Random rnd = new Random();
             int rndNum;
-            Console.WriteLine("----- Ana Puzzle -----");
+            Console.WriteLine("  --- Ana Puzzle ---\n");
             //for (int i = 0; i < 3; i++)
             //{
             //    for (int j = 0; j < 3; j++)
@@ -48,7 +48,7 @@ namespace _8PuzzleSolution
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    Console.Write(root[i, j] + "  ");
+                    Console.Write("  "+root[i, j]);
                 }
                 Console.WriteLine();
             }
@@ -87,39 +87,39 @@ namespace _8PuzzleSolution
             List<Node> OpenList = new List<Node>();
             List<Node> CloseList = new List<Node>();
 
-            OpenList.Add(root);
+            OpenList.Add(root); // kök düðümü iþlem yapýlmadý listesine ekle
             bool Solved = false;
 
             while (!Solved && OpenList.Count > 0)
             {
-                Node currentNode = OpenList[0];
-                CloseList.Add(currentNode);
-                OpenList.RemoveAt(0);
+                Node currentNode = OpenList[0]; //  liste üzerinde iþlem yapýlmamýþ sýradaki düðümü çaðýr
+                CloseList.Add(currentNode); // iþlem yapýlacak düðümü, iþlem yapýldý listesine yaz
+                OpenList.RemoveAt(0); // iþlem yapýlmayan düðümler listesinden kaldýr
 
                 if (currentNode.CurrentState[0,0] == 0 && currentNode.CurrentState[0, 1] == 0 && currentNode.CurrentState[0, 2] == 0)
                 {
-                    for (int i = 0; i < 3; i++)
+                    for (int i = 0; i < 3; i++) 
                     {
                         for (int j = 0; j < 3; j++)
                         {
-                            currentNode.CurrentState[i, j] = currentNode.Puzzle[i, j];
+                            currentNode.CurrentState[i, j] = currentNode.Puzzle[i, j]; // iþlem yapýlacak düðümün matrisini Node sýnýfýndaki CurrentState matrisine eþitle
                         }
                     }
                 }
 
-                currentNode.BeginMove();
-                
-                for (int i = 0; i < currentNode.Children.Count; i++)
+                currentNode.BeginMove(); // Node sýnýfýndaki yapýlacak hareketleri kontrol et 
+                    
+                for (int i = 0; i < currentNode.Children.Count; i++) //hareketler sonrasý oluþan düðüm var mý ??
                 {
-                    Node currentChild = currentNode.Children[i];
+                    Node currentChild = currentNode.Children[i]; // varsa oluþan ilk düðüm çözüm düðümü mü ?
                     if (currentChild.isGoalState(currentChild))
                     {
                         Console.WriteLine("Çözüm Bulundu....");
                         Solved = true;
                         CurrentPath(SolutionPath, currentChild);
                     }
-
-                    if (!isListContains(OpenList, currentChild) && !isListContains(CloseList, currentChild))
+                    // çözüm düðümü deðilse hareketleri kontrol edilecek iþlem yapýlmamýþ düðümler listesine ekle
+                    if (!isListContains(OpenList, currentChild) && !isListContains(CloseList, currentChild)) 
                     {
                         OpenList.Add(currentChild);
                     }
@@ -132,18 +132,18 @@ namespace _8PuzzleSolution
         public static void CurrentPath(List<Node> path, Node elem)
         {
             Console.WriteLine("Çözüm Yazdýrýlýyor...\n");
-            Node current = elem;
+            Node current = elem; // bulunan çözüm düðümünden baþlayarak
             path.Add(current);
-            while (current.parent != null)
+            while (current.parent != null) //parent'ý boþ olana kadar
             {
-                current = current.parent;
+                current = current.parent; // bir parent üste çýkarak her matrisi çözüm yolu listesine ekle
                 path.Add(current);
             }
         }
 
         public static bool isListContains(List<Node> list, Node elem)
         {
-            bool isContains = false;
+            bool isContains = false; // iþlem yapýlmamýþ düðümler listesini kontrol et
             if (list.Contains(elem))
             {
                 isContains = true;
